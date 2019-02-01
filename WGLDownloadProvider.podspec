@@ -95,7 +95,7 @@ Pod::Spec.new do |spec|
   #spec.exclude_files = "Classes/Exclude"
   #spec.vendored_library = 'libs/WGLDownloadProvider.a'
 
-  spec.public_header_files = "WGLDownloadProvider/**/*.h"
+  spec.public_header_files = "WGLDownloadProvider/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
