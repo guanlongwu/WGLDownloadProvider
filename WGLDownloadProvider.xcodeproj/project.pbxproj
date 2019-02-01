@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0900355921C7806C00964EB7 /* WGLDownloadProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0900355821C7806C00964EB7 /* WGLDownloadProvider.m */; };
+		0900355A21C7806C00964EB7 /* WGLDownloadProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0900355721C7806C00964EB7 /* WGLDownloadProvider.h */; };
+		0900356221C7983A00964EB7 /* WGLDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0900356121C7983A00964EB7 /* WGLDownloadTask.m */; };
+		090035CC21CC8E1800964EB7 /* WGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 090035CB21CC8E1700964EB7 /* WGLDownloader.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0900355221C7806C00964EB7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				0900355A21C7806C00964EB7 /* WGLDownloadProvider.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0900355421C7806C00964EB7 /* libWGLDownloadProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWGLDownloadProvider.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0900355721C7806C00964EB7 /* WGLDownloadProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloadProvider.h; sourceTree = "<group>"; };
+		0900355821C7806C00964EB7 /* WGLDownloadProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadProvider.m; sourceTree = "<group>"; };
+		0900356021C7983A00964EB7 /* WGLDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloadTask.h; sourceTree = "<group>"; };
+		0900356121C7983A00964EB7 /* WGLDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadTask.m; sourceTree = "<group>"; };
+		090035CA21CC8E1700964EB7 /* WGLDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloader.h; sourceTree = "<group>"; };
+		090035CB21CC8E1700964EB7 /* WGLDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloader.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0900355121C7806C00964EB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0900354B21C7806C00964EB7 = {
+			isa = PBXGroup;
+			children = (
+				0900355621C7806C00964EB7 /* WGLDownloadProvider */,
+				0900355521C7806C00964EB7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0900355521C7806C00964EB7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0900355421C7806C00964EB7 /* libWGLDownloadProvider.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0900355621C7806C00964EB7 /* WGLDownloadProvider */ = {
+			isa = PBXGroup;
+			children = (
+				0900355721C7806C00964EB7 /* WGLDownloadProvider.h */,
+				0900355821C7806C00964EB7 /* WGLDownloadProvider.m */,
+				0900356021C7983A00964EB7 /* WGLDownloadTask.h */,
+				0900356121C7983A00964EB7 /* WGLDownloadTask.m */,
+				090035CA21CC8E1700964EB7 /* WGLDownloader.h */,
+				090035CB21CC8E1700964EB7 /* WGLDownloader.m */,
+			);
+			path = WGLDownloadProvider;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0900355321C7806C00964EB7 /* WGLDownloadProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0900355D21C7806C00964EB7 /* Build configuration list for PBXNativeTarget "WGLDownloadProvider" */;
+			buildPhases = (
+				0900355021C7806C00964EB7 /* Sources */,
+				0900355121C7806C00964EB7 /* Frameworks */,
+				0900355221C7806C00964EB7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WGLDownloadProvider;
+			productName = WGLDownloadProvider;
+			productReference = 0900355421C7806C00964EB7 /* libWGLDownloadProvider.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0900354C21C7806C00964EB7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = WGLKit;
+				TargetAttributes = {
+					0900355321C7806C00964EB7 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0900354F21C7806C00964EB7 /* Build configuration list for PBXProject "WGLDownloadProvider" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0900354B21C7806C00964EB7;
+			productRefGroup = 0900355521C7806C00964EB7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0900355321C7806C00964EB7 /* WGLDownloadProvider */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0900355021C7806C00964EB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0900355921C7806C00964EB7 /* WGLDownloadProvider.m in Sources */,
+				0900356221C7983A00964EB7 /* WGLDownloadTask.m in Sources */,
+				090035CC21CC8E1800964EB7 /* WGLDownloader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0900355B21C7806C00964EB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0900355C21C7806C00964EB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0900355E21C7806C00964EB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0900355F21C7806C00964EB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0900354F21C7806C00964EB7 /* Build configuration list for PBXProject "WGLDownloadProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0900355B21C7806C00964EB7 /* Debug */,
+				0900355C21C7806C00964EB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0900355D21C7806C00964EB7 /* Build configuration list for PBXNativeTarget "WGLDownloadProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0900355E21C7806C00964EB7 /* Debug */,
+				0900355F21C7806C00964EB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0900354C21C7806C00964EB7 /* Project object */;
+}
