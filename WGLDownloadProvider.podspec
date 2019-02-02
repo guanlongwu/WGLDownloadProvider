@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "WGLDownloadProvider"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.3"
   spec.summary      = "This is a file download tool."
 
   # This description is used to generate tags and improve search results.
@@ -91,11 +91,11 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-   spec.source_files = 'WGLDownloadProvider/**/*.h'
+  spec.source_files = 'WGLDownloadProvider/**/*.h'
   #spec.exclude_files = "Classes/Exclude"
   #spec.vendored_library = 'libs/WGLDownloadProvider.a'
 
-  #spec.public_header_files = "WGLDownloadProvider/*.h"
+  spec.public_header_files = 'WGLDownloadProvider/**/*.h'
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

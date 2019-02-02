@@ -34,6 +34,7 @@
 		09948E34220545D00075ADDE /* WGLDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGLDownloader.h; sourceTree = "<group>"; };
 		09948E36220545D00075ADDE /* WGLDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadTask.m; sourceTree = "<group>"; };
 		09948E37220545D00075ADDE /* WGLDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGLDownloadTask.h; sourceTree = "<group>"; };
+		09948E3A220548D70075ADDE /* WGLDownloadProvider-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WGLDownloadProvider-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 			children = (
 				0900355721C7806C00964EB7 /* WGLDownloadProvider.h */,
 				0900355821C7806C00964EB7 /* WGLDownloadProvider.m */,
+				09948E3A220548D70075ADDE /* WGLDownloadProvider-Info.plist */,
 				09948E32220545D00075ADDE /* Downloader */,
 				09948E35220545D00075ADDE /* Task */,
 			);
