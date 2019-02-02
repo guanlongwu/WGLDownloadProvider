@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		0900355921C7806C00964EB7 /* WGLDownloadProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0900355821C7806C00964EB7 /* WGLDownloadProvider.m */; };
 		0900355A21C7806C00964EB7 /* WGLDownloadProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0900355721C7806C00964EB7 /* WGLDownloadProvider.h */; };
-		0900356221C7983A00964EB7 /* WGLDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 0900356121C7983A00964EB7 /* WGLDownloadTask.m */; };
-		090035CC21CC8E1800964EB7 /* WGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 090035CB21CC8E1700964EB7 /* WGLDownloader.m */; };
+		09948E38220545D00075ADDE /* WGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 09948E33220545D00075ADDE /* WGLDownloader.m */; };
+		09948E39220545D00075ADDE /* WGLDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09948E36220545D00075ADDE /* WGLDownloadTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,10 +30,10 @@
 		0900355421C7806C00964EB7 /* libWGLDownloadProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWGLDownloadProvider.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0900355721C7806C00964EB7 /* WGLDownloadProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloadProvider.h; sourceTree = "<group>"; };
 		0900355821C7806C00964EB7 /* WGLDownloadProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadProvider.m; sourceTree = "<group>"; };
-		0900356021C7983A00964EB7 /* WGLDownloadTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloadTask.h; sourceTree = "<group>"; };
-		0900356121C7983A00964EB7 /* WGLDownloadTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadTask.m; sourceTree = "<group>"; };
-		090035CA21CC8E1700964EB7 /* WGLDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloader.h; sourceTree = "<group>"; };
-		090035CB21CC8E1700964EB7 /* WGLDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloader.m; sourceTree = "<group>"; };
+		09948E33220545D00075ADDE /* WGLDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGLDownloader.m; sourceTree = "<group>"; };
+		09948E34220545D00075ADDE /* WGLDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGLDownloader.h; sourceTree = "<group>"; };
+		09948E36220545D00075ADDE /* WGLDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadTask.m; sourceTree = "<group>"; };
+		09948E37220545D00075ADDE /* WGLDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGLDownloadTask.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,12 +68,28 @@
 			children = (
 				0900355721C7806C00964EB7 /* WGLDownloadProvider.h */,
 				0900355821C7806C00964EB7 /* WGLDownloadProvider.m */,
-				0900356021C7983A00964EB7 /* WGLDownloadTask.h */,
-				0900356121C7983A00964EB7 /* WGLDownloadTask.m */,
-				090035CA21CC8E1700964EB7 /* WGLDownloader.h */,
-				090035CB21CC8E1700964EB7 /* WGLDownloader.m */,
+				09948E32220545D00075ADDE /* Downloader */,
+				09948E35220545D00075ADDE /* Task */,
 			);
 			path = WGLDownloadProvider;
+			sourceTree = "<group>";
+		};
+		09948E32220545D00075ADDE /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				09948E34220545D00075ADDE /* WGLDownloader.h */,
+				09948E33220545D00075ADDE /* WGLDownloader.m */,
+			);
+			path = Downloader;
+			sourceTree = "<group>";
+		};
+		09948E35220545D00075ADDE /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				09948E37220545D00075ADDE /* WGLDownloadTask.h */,
+				09948E36220545D00075ADDE /* WGLDownloadTask.m */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09948E39220545D00075ADDE /* WGLDownloadTask.m in Sources */,
 				0900355921C7806C00964EB7 /* WGLDownloadProvider.m in Sources */,
-				0900356221C7983A00964EB7 /* WGLDownloadTask.m in Sources */,
-				090035CC21CC8E1800964EB7 /* WGLDownloader.m in Sources */,
+				09948E38220545D00075ADDE /* WGLDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
