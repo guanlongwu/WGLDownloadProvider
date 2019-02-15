@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "WGLDownloadProvider"
   spec.version      = "0.0.4"
-  spec.summary      = "This is a file download tool."
+  spec.summary      = "This is a category display component."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-                    "This is a file download tool."
+                  "This is a category display component."
                    DESC
 
   spec.homepage     = "https://github.com/guanlongwu/WGLDownloadProvider"
@@ -91,11 +91,11 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files = 'WGLDownloadProvider/**/*.h'
+  spec.source_files = 'WGLDownloadProvider/**/*'
   #spec.exclude_files = "Classes/Exclude"
   #spec.vendored_library = 'libs/WGLDownloadProvider.a'
 
-  spec.public_header_files = 'WGLDownloadProvider/**/*.h'
+  spec.public_header_files = "WGLDownloadProvider/**/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -118,9 +118,11 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
+  spec.frameworks = 'CoreFoundation','Foundation'
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
 
+  # spec.library = 'WGLDownloadProvider'
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
 
@@ -131,7 +133,7 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-    spec.requires_arc = true
+  spec.requires_arc = true
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
