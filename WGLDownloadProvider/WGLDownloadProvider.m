@@ -163,7 +163,7 @@
         
         if ([self.delegate respondsToSelector:@selector(downloadDidStart:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate downloadDidStart:self];
+                [self.delegate downloadDidStart:self urlString:downloader.urlString];
             });
         }
     });
@@ -181,7 +181,7 @@
         
         if ([self.delegate respondsToSelector:@selector(downloader:didReceiveLength:totalLength:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate downloader:self didReceiveLength:receiveLength totalLength:totalLength];
+                [self.delegate downloader:self urlString:downloader.urlString didReceiveLength:receiveLength totalLength:totalLength];
             });
         }
     });
@@ -201,7 +201,7 @@
         
         if ([self.delegate respondsToSelector:@selector(downloadDidFinish:filePath:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate downloadDidFinish:self filePath:filePath];
+                [self.delegate downloadDidFinish:self urlString:downloader.urlString filePath:filePath];
             });
         }
     });
@@ -220,7 +220,7 @@
         
         if ([self.delegate respondsToSelector:@selector(downloadDidFail:errorType:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate downloadDidFail:self errorType:errorType];
+                [self.delegate downloadDidFail:self urlString:downloader.urlString errorType:errorType];
             });
         }
     });

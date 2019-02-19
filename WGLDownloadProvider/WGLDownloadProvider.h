@@ -58,15 +58,15 @@ typedef NS_ENUM(NSInteger, WGLDownloadExeOrder) {
 @protocol WGLDownloadProviderDelegate <NSObject>
 
 //下载开始
-- (void)downloadDidStart:(WGLDownloadProvider *)dlProvider;
+- (void)downloadDidStart:(WGLDownloadProvider *)dlProvider urlString:(NSString *)urlString;
 
 //下载中
-- (void)downloader:(WGLDownloadProvider *)dlProvider didReceiveLength:(uint64_t)receiveLength totalLength:(uint64_t)totalLength;
+- (void)downloader:(WGLDownloadProvider *)dlProvider urlString:(NSString *)urlString didReceiveLength:(uint64_t)receiveLength totalLength:(uint64_t)totalLength;
 
 //下载成功
-- (void)downloadDidFinish:(WGLDownloadProvider *)dlProvider filePath:(NSString *)filePath;
+- (void)downloadDidFinish:(WGLDownloadProvider *)dlProvider urlString:(NSString *)urlString filePath:(NSString *)filePath;
 
 //下载失败
-- (void)downloadDidFail:(WGLDownloadProvider *)dlProvider errorType:(WGLDownloadErrorType)errorType;
+- (void)downloadDidFail:(WGLDownloadProvider *)dlProvider urlString:(NSString *)urlString errorType:(WGLDownloadErrorType)errorType;
 
 @end

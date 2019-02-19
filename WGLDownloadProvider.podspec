@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "WGLDownloadProvider"
-  spec.version      = "0.0.6"
+  spec.version      = "0.0.7"
   spec.summary      = "This is a category display component."
 
   # This description is used to generate tags and improve search results.
