@@ -53,21 +53,13 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     //开始新的下载
     self.downloadState = WGLDownloadStateReady;
     self.receiveData = [[NSMutableData alloc] init];
-    [self initConnection];
+    [self performSelector:@selector(startConnection)
+                 onThread:[self.class _networkThread]
+               withObject:nil
+            waitUntilDone:NO];
 }
 
-- (void)cancel {
-    if (self.connection
-        && self.downloadState == WGLDownloadStateDownloading) {
-        //正处于下载中状态，则取消下载
-        [self.connection cancel];
-    }
-    self.downloadState = WGLDownloadStateCancelled;
-    self.receiveData = nil;
-    self.connection = nil;
-}
-
-- (void)initConnection {
+- (void)startConnection {
     if (self.urlString.length == 0) {
         return;
     }
@@ -85,6 +77,18 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:(id<NSURLConnectionDelegate>)self startImmediately:NO];
     [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.connection start];
+    
+}
+
+- (void)cancel {
+    if (self.connection
+        && self.downloadState == WGLDownloadStateDownloading) {
+        //正处于下载中状态，则取消下载
+        [self.connection cancel];
+    }
+    self.downloadState = WGLDownloadStateCancelled;
+    self.receiveData = nil;
+    self.connection = nil;
 }
 
 //下载准备
@@ -130,12 +134,45 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     }
 }
 
+#pragma mark - Global network thread
+
+//Global request network thread, used by NSURLConnection delegate.
++ (NSThread *)_networkThread {
+    static NSThread *thread = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        thread = [[NSThread alloc] initWithTarget:self selector:@selector(_networkThreadMain:) object:nil];
+        if ([thread respondsToSelector:@selector(setQualityOfService:)]) {
+            thread.qualityOfService = NSQualityOfServiceBackground;
+        }
+        [thread start];
+    });
+    return thread;
+}
+
+//Network thread entry point.
++ (void)_networkThreadMain:(id)object {
+    //开启常驻线程，否则在子线程启动NSURLConnection，子线程销毁了，导致不执行delegate回调
+    @autoreleasepool {
+        [[NSThread currentThread] setName:@"com.wugl.download.request"];
+        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+        [runLoop addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+        [runLoop run];
+    }
+}
+
 #pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     
+    uint64_t expectedContentLen = [response expectedContentLength];
+    if ([response expectedContentLength] == NSURLResponseUnknownLength) {
+        //文件已压缩，无法获取长度，会返回-1
+        expectedContentLen = 0;
+    }
+    
     //文件总长度=已下载的长度（断点下载的情况下>0）+此次预期下载的长度
-    self.expectedDataLength = self.receivedDataLength + [response expectedContentLength];
+    self.expectedDataLength = self.receivedDataLength + expectedContentLen;
     
     //检测下载是否合法
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -164,7 +201,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
         long long expected = @(self.expectedDataLength).longLongValue;
         uint64_t freeDiskSpace = [self getDiskFreeSpace];
         if (freeDiskSpace < kKeepDiskSpace
-            || (freeDiskSpace < expected + kKeepDiskSpace && expected != -1)) {
+            || (freeDiskSpace < expected + kKeepDiskSpace && expected != NSURLResponseUnknownLength)) {
             //3、Not Enough free space
             
             self.downloadState = WGLDownloadStateFailed;
@@ -271,7 +308,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     return [self.defaultDirectory stringByAppendingPathComponent:self.urlString];
 }
 
-//获取磁盘总容量（单位MB）
+//获取磁盘总容量（单位B）
 - (uint64_t)getDiskTotalSpace {
     uint64_t totalSpace = 0;
     __autoreleasing NSError *error = nil;
@@ -279,14 +316,14 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:path error:&error];
     if (dictionary) {
         NSNumber *fileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemSize];
-        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue] / 1024 / 1024;
+        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
     } else {
         NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
     }
     return totalSpace;
 }
 
-//获取磁盘剩余容量（单位MB）
+//获取磁盘剩余容量（单位B）
 - (uint64_t)getDiskFreeSpace {
     uint64_t totalFreeSpace = 0;
     __autoreleasing NSError *error = nil;
@@ -294,7 +331,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:path error: &error];
     if (dictionary) {
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue] / 1024 / 1024;
+        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
     }
     else {
         NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);

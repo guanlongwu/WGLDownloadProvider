@@ -18,11 +18,12 @@ typedef NS_ENUM(NSInteger, WGLDownloadErrorType) {
 };
 
 typedef NS_ENUM(NSInteger, WGLDownloadState) {
-    WGLDownloadStateReady = 0,
-    WGLDownloadStateDownloading,
-    WGLDownloadStateFinish,
-    WGLDownloadStateCancelled,
-    WGLDownloadStateFailed,
+    WGLDownloadStateUnknow,             //未知
+    WGLDownloadStateReady = 1,          //下载准备中
+    WGLDownloadStateDownloading,        //正在下载中
+    WGLDownloadStateFinish,             //下载完成
+    WGLDownloadStateCancelled,          //下载取消
+    WGLDownloadStateFailed,             //下载失败
 };
 
 #endif /* WGLUtil_h */
