@@ -108,7 +108,10 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     //文件不存在，则创建
     BOOL fileExist = [fileManager fileExistsAtPath:self.downloadFilePath];
     if (!fileExist) {
-        [fileManager createFileAtPath:self.downloadFilePath contents:nil attributes:nil];
+        BOOL success = [fileManager createFileAtPath:self.downloadFilePath contents:nil attributes:nil];
+        if (NO == success) {
+            NSLog(@"");
+        }
         
         //是否设定了下载范围
         if (self.toByte > self.fromByte) {
