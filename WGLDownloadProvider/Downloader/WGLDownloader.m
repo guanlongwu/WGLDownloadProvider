@@ -10,6 +10,7 @@
 static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 
 #import "WGLDownloader.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface WGLDownloader ()
 @property (nonatomic, copy) NSString *downloadFilePath;
@@ -280,8 +281,8 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 //下载文件存放的目录
 - (NSString *)downloadDirectory {
     NSString *directory = nil;
-    if ([self.dataSource respondsToSelector:@selector(downloader:getDirectory:)]) {
-        directory = [self.dataSource downloader:self getDirectory:self.urlString];
+    if ([self.dataSource respondsToSelector:@selector(downloaderGetDirectory:urlString:)]) {
+        directory = [self.dataSource downloaderGetDirectory:self urlString:self.urlString];
     }
     if (directory.length < 5) {
         directory = self.defaultDirectory;
@@ -291,7 +292,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 
 //下载文件存放的路径
 - (NSString *)downloadFilePath {
-    NSString *path = [self.downloadDirectory stringByAppendingPathComponent:self.urlString];
+    NSString *path = [self.downloadDirectory stringByAppendingPathComponent:[self cacheFileName]];
     if (path.length < 5) {
         path = self.defaultFilePath;
     }
@@ -308,7 +309,36 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 
 //默认下载路径
 - (NSString *)defaultFilePath {
-    return [self.defaultDirectory stringByAppendingPathComponent:self.urlString];
+    NSString *path = [self.defaultDirectory stringByAppendingPathComponent:[self cacheFileName]];
+    return path;
+}
+
+//文件缓存key
+- (NSString *)cacheFileName {
+    NSString *cacheName = nil;
+    if ([self.dataSource respondsToSelector:@selector(downloaderCacheFileName:urlString:)]) {
+        cacheName = [self.dataSource downloaderCacheFileName:self urlString:self.urlString];
+    }
+    if (cacheName.length < 5) {
+        cacheName = [self cachedFileNameForKey:self.urlString];
+    }
+    return cacheName;
+}
+
+//url进行md5
+- (nullable NSString *)cachedFileNameForKey:(nullable NSString *)key {
+    const char *str = key.UTF8String;
+    if (str == NULL) {
+        str = "";
+    }
+    unsigned char r[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (CC_LONG)strlen(str), r);
+    NSURL *keyURL = [NSURL URLWithString:key];
+    NSString *ext = keyURL ? keyURL.pathExtension : key.pathExtension;
+    NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%@",
+                          r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10],
+                          r[11], r[12], r[13], r[14], r[15], ext.length == 0 ? @"" : [NSString stringWithFormat:@".%@", ext]];
+    return filename;
 }
 
 //获取磁盘总容量（单位B）

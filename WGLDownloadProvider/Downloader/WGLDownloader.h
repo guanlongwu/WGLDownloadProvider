@@ -58,8 +58,11 @@
 
 @protocol WGLDownloaderDataSource <NSObject>
 
-//获取下载文件存放的目录
-- (NSString *)downloader:(WGLDownloader *)downloader getDirectory:(NSString *)urlString;
+//文件下载的存放目录
+- (NSString *)downloaderGetDirectory:(WGLDownloader *)downloader urlString:(NSString *)urlString;
+
+//文件缓存的唯一key
+- (NSString *)downloaderCacheFileName:(WGLDownloader *)downloader urlString:(NSString *)urlString;
 
 @end
 

@@ -54,6 +54,12 @@ typedef NS_ENUM(NSInteger, WGLDownloadExeOrder) {
 //是否已缓存
 - (BOOL)downloadProvider:(WGLDownloadProvider *)dlProvider existCache:(NSString *)urlString;
 
+//文件下载的存放目录
+- (NSString *)downloadProvider:(WGLDownloadProvider *)dlProvider getDirectory:(NSString *)urlString;
+
+//文件缓存的唯一key
+- (NSString *)downloadProvider:(WGLDownloadProvider *)dlProvider cacheFileName:(NSString *)urlString;
+
 @end
 
 

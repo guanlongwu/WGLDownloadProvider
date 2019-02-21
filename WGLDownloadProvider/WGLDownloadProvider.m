@@ -148,8 +148,20 @@
 
 #pragma mark - WGLDownloaderDelegate / datasource
 
-- (NSString *)downloader:(WGLDownloader *)downloader getDirectory:(NSString *)urlString {
-    return nil;
+- (NSString *)downloaderGetDirectory:(WGLDownloader *)downloader urlString:(NSString *)urlString {
+    NSString *directory = nil;
+    if ([self.dataSource respondsToSelector:@selector(downloadProvider:getDirectory:)]) {
+        directory = [self.dataSource downloadProvider:self getDirectory:urlString];
+    }
+    return directory;
+}
+
+- (NSString *)downloaderCacheFileName:(WGLDownloader *)downloader urlString:(NSString *)urlString {
+    NSString *fileName = nil;
+    if ([self.dataSource respondsToSelector:@selector(downloadProvider:cacheFileName:)]) {
+        fileName = [self.dataSource downloadProvider:self cacheFileName:urlString];
+    }
+    return fileName;
 }
 
 - (void)downloadDidStart:(WGLDownloader *)downloader {
