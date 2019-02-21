@@ -22,6 +22,15 @@
 
 @implementation WGLDownloadProvider
 
++ (instancetype)sharedProvider {
+    static WGLDownloadProvider *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[[self class] alloc] init];
+    });
+    return instance;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         _lock = dispatch_semaphore_create(1);

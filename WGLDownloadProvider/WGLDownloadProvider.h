@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, WGLDownloadExeOrder) {
 @property (nonatomic, weak) id <WGLDownloadProviderDataSource> dataSource;
 @property (nonatomic, weak) id <WGLDownloadProviderDelegate> delegate;
 
++ (instancetype)sharedProvider;
+
 /**
  最大支持下载数
  默认-1，表示不进行限制
