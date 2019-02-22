@@ -13,9 +13,15 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 #import <CommonCrypto/CommonDigest.h>
 
 @interface WGLDownloader ()
-@property (nonatomic, copy) NSString *downloadFilePath;
+@property (nonatomic, copy) NSString *downloadFilePath;     //下载文件的存放路径
 @property (nonatomic, assign) uint64_t downloadFileSize;
 @property (nonatomic, assign) WGLDownloadState downloadState;
+@property (nonatomic, copy) NSString *downloadDirectory;    //下载文件的存放目录
+@property (nonatomic, copy) NSString *defaultDirectory;     //默认下载目录NSTemporaryDirectory()
+@property (nonatomic, copy) NSString *defaultFilePath;      //默认下载路径
+@property (nonatomic, copy) NSString *cacheFileName;        //文件缓存名
+@property (nonatomic, copy) NSString *tempDownloadDirectory;    //临时下载目录
+@property (nonatomic, copy) NSString *tempDownloadFilePath;     //临时下载路径
 
 @property (nonatomic, strong) NSMutableURLRequest *request;
 @property (nonatomic, strong) NSURLConnection *connection;
@@ -24,8 +30,6 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 @property (nonatomic, assign) uint64_t receivedDataLength;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 
-//默认下载目录NSTemporaryDirectory()
-@property (nonatomic, copy) NSString *defaultDirectory;
 
 @end
 
@@ -51,9 +55,10 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     //下载准备
     [self prepare];
     
-    //开始新的下载
     self.downloadState = WGLDownloadStateReady;
     self.receiveData = [[NSMutableData alloc] init];
+    
+    //开始新的下载
     [self performSelector:@selector(startConnection)
                  onThread:[self.class _networkThread]
                withObject:nil
@@ -96,22 +101,15 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 - (void)prepare {
     
     //目录不存在，则创建
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL isDir = FALSE;
-    BOOL isDirExist = [fileManager fileExistsAtPath:self.downloadDirectory isDirectory:&isDir];
-    if(!(isDirExist && isDir)) {
-        BOOL bCreateDir = [fileManager createDirectoryAtPath:self.downloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-        if(!bCreateDir){
-            NSLog(@"Create Audio Directory Failed.");
-        }
-    }
+    [self createDiretory];
     
     //文件不存在，则创建
-    BOOL fileExist = [fileManager fileExistsAtPath:self.downloadFilePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL fileExist = [fileManager fileExistsAtPath:self.tempDownloadFilePath];
     if (!fileExist) {
-        BOOL success = [fileManager createFileAtPath:self.downloadFilePath contents:nil attributes:nil];
+        BOOL success = [fileManager createFileAtPath:self.tempDownloadFilePath contents:nil attributes:nil];
         if (NO == success) {
-            NSLog(@"");
+            NSLog(@"Create tmp filePath Failed.");
         }
         
         //是否设定了下载范围
@@ -123,7 +121,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     else {
         //文件已存在，则断点续传下载
         
-        uint64_t existFileSize = [self getFileSizeFromPath:self.downloadFilePath];
+        uint64_t existFileSize = [self getFileSizeFromPath:self.tempDownloadFilePath];
         if (existFileSize > self.fromByte
             && existFileSize < self.toByte) {
             NSString *range = [NSString stringWithFormat:@"bytes=%lld-%lld", existFileSize, self.toByte];
@@ -135,6 +133,29 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
         }
         
         self.receivedDataLength += existFileSize;
+    }
+}
+
+- (void)createDiretory {
+    //创建下载目录
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = FALSE;
+    BOOL isDirExist = [fileManager fileExistsAtPath:self.downloadDirectory isDirectory:&isDir];
+    if(!(isDirExist && isDir)) {
+        BOOL bCreateDir = [fileManager createDirectoryAtPath:self.downloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        if(!bCreateDir){
+            NSLog(@"Create Directory Failed.");
+        }
+    }
+    
+    //创建下载临时目录
+    BOOL isDir2 = FALSE;
+    BOOL isDirExist2 = [fileManager fileExistsAtPath:self.tempDownloadDirectory isDirectory:&isDir2];
+    if(!(isDirExist2 && isDir2)) {
+        BOOL bCreateDir = [fileManager createDirectoryAtPath:self.tempDownloadDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+        if(!bCreateDir){
+            NSLog(@"Create temp Directory Failed.");
+        }
     }
 }
 
@@ -219,7 +240,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
             //开始下载
             
             self.downloadState = WGLDownloadStateDownloading;
-            self.fileHandle = [NSFileHandle fileHandleForWritingAtPath:self.downloadFilePath];
+            self.fileHandle = [NSFileHandle fileHandleForWritingAtPath:self.tempDownloadFilePath];
             [self caculateDownloadFileSize];
             
             if ([self.delegate respondsToSelector:@selector(downloadDidStart:)]) {
@@ -261,8 +282,16 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
         self.receiveData.data = [NSData data];
         [self caculateDownloadFileSize];
         
-        if ([self.delegate respondsToSelector:@selector(downloadDidFinish:filePath:)]) {
-            [self.delegate downloadDidFinish:self filePath:self.downloadFilePath];
+        BOOL success = [self saveDownloadFile];
+        if (success) {
+            if ([self.delegate respondsToSelector:@selector(downloadDidFinish:filePath:)]) {
+                [self.delegate downloadDidFinish:self filePath:self.downloadFilePath];
+            }
+        }
+        else {
+            if ([self.delegate respondsToSelector:@selector(downloadDidFail:errorType:)]) {
+                [self.delegate downloadDidFail:self errorType:WGLDownloadErrorTypeCacheInDiskError];
+            }
         }
     }
 }
@@ -276,28 +305,52 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
     }
 }
 
-#pragma mark - private
+#pragma mark - 保存下载文件
+
+- (BOOL)saveDownloadFile {
+    
+    //将下载文件从temp移动到document
+    NSString *fromPath = [self.tempDownloadFilePath copy];
+    NSString *toPath = [self.downloadFilePath copy];
+    NSError *error = nil;
+    BOOL isMove = [[NSFileManager defaultManager] moveItemAtPath:fromPath toPath:toPath error:&error];
+    if (isMove && !error) {
+        //保存成功
+        return YES;
+    }
+    else {
+        //保存失败
+        return NO;
+    }
+}
+
+#pragma mark - 下载目录/路径
 
 //下载文件存放的目录
 - (NSString *)downloadDirectory {
-    NSString *directory = nil;
-    if ([self.dataSource respondsToSelector:@selector(downloaderGetDirectory:urlString:)]) {
-        directory = [self.dataSource downloaderGetDirectory:self urlString:self.urlString];
+    if (!_downloadDirectory) {
+        if ([self.dataSource respondsToSelector:@selector(downloaderGetDirectory:urlString:)]) {
+            _downloadDirectory = [self.dataSource downloaderGetDirectory:self urlString:self.urlString];
+        }
+        if (_downloadDirectory.length < 5) {
+            _downloadDirectory = self.defaultDirectory;
+        }
     }
-    if (directory.length < 5) {
-        directory = self.defaultDirectory;
-    }
-    return directory;
+    return _downloadDirectory;
 }
 
 //下载文件存放的路径
 - (NSString *)downloadFilePath {
-    NSString *path = [self.downloadDirectory stringByAppendingPathComponent:[self cacheFileName]];
-    if (path.length < 5) {
-        path = self.defaultFilePath;
+    if (!_downloadFilePath) {
+        _downloadFilePath = [self.downloadDirectory stringByAppendingPathComponent:self.cacheFileName];
+        if (_downloadFilePath.length < 5) {
+            _downloadFilePath = self.defaultFilePath;
+        }
     }
-    return path;
+    return _downloadFilePath;
 }
+
+#pragma mark - 默认下载目录/路径
 
 //默认下载目录
 - (NSString *)defaultDirectory {
@@ -309,32 +362,53 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 
 //默认下载路径
 - (NSString *)defaultFilePath {
-    NSString *path = [self.defaultDirectory stringByAppendingPathComponent:[self cacheFileName]];
-    return path;
+    if (!_defaultFilePath) {
+        _defaultFilePath = [self.defaultDirectory stringByAppendingPathComponent:self.cacheFileName];
+    }
+    return _defaultFilePath;
 }
+
+#pragma mark - 临时下载目录/路径
+
+- (NSString *)tempDownloadDirectory {
+    if (!_tempDownloadDirectory) {
+        _tempDownloadDirectory = [NSString stringWithFormat:@"%@tempDownloadDirectory", self.defaultDirectory];
+    }
+    return _tempDownloadDirectory;
+}
+
+- (NSString *)tempDownloadFilePath {
+    if (!_tempDownloadFilePath) {
+        _tempDownloadFilePath = [self.tempDownloadDirectory stringByAppendingPathComponent:self.cacheFileName];
+    }
+    return _tempDownloadFilePath;
+}
+
+#pragma mark -
 
 //文件缓存key
 - (NSString *)cacheFileName {
-    NSString *cacheName = nil;
-    if ([self.dataSource respondsToSelector:@selector(downloaderCacheFileName:urlString:)]) {
-        cacheName = [self.dataSource downloaderCacheFileName:self urlString:self.urlString];
+    if (!_cacheFileName) {
+        if ([self.dataSource respondsToSelector:@selector(downloaderCacheFileName:urlString:)]) {
+            _cacheFileName = [self.dataSource downloaderCacheFileName:self urlString:self.urlString];
+        }
+        if (_cacheFileName.length < 5) {
+            _cacheFileName = [self cachedFileNameForURLString:self.urlString];
+        }
     }
-    if (cacheName.length < 5) {
-        cacheName = [self cachedFileNameForKey:self.urlString];
-    }
-    return cacheName;
+    return _cacheFileName;
 }
 
 //url进行md5
-- (nullable NSString *)cachedFileNameForKey:(nullable NSString *)key {
-    const char *str = key.UTF8String;
+- (NSString *)cachedFileNameForURLString:(NSString *)urlString {
+    const char *str = urlString.UTF8String;
     if (str == NULL) {
         str = "";
     }
     unsigned char r[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, (CC_LONG)strlen(str), r);
-    NSURL *keyURL = [NSURL URLWithString:key];
-    NSString *ext = keyURL ? keyURL.pathExtension : key.pathExtension;
+    NSURL *keyURL = [NSURL URLWithString:urlString];
+    NSString *ext = keyURL ? keyURL.pathExtension : urlString.pathExtension;
     NSString *filename = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%@",
                           r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10],
                           r[11], r[12], r[13], r[14], r[15], ext.length == 0 ? @"" : [NSString stringWithFormat:@".%@", ext]];
@@ -391,7 +465,7 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
 
 //计算当前已下载文件的大小
 - (void)caculateDownloadFileSize {
-    uint64_t fileSize = [self getFileSizeFromPath:self.downloadFilePath];
+    uint64_t fileSize = [self getFileSizeFromPath:self.tempDownloadFilePath];
     self.downloadFileSize = fileSize;
 }
 

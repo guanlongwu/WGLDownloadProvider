@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, WGLDownloadErrorType) {
     WGLDownloadErrorTypeInvalidDirectory,       //非法下载目录
     WGLDownloadErrorTypeInvalidRequestRange,    //非法下载请求范围
     WGLDownloadErrorTypeNotEnoughFreeSpace,     //下载空间不足
+    WGLDownloadErrorTypeCacheInDiskError,       //磁盘缓存失败
 };
 
 typedef NS_ENUM(NSInteger, WGLDownloadState) {
