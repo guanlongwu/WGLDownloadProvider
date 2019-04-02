@@ -1,0 +1,16 @@
+PODS:
+  - WGLFileCache (0.0.3)
+
+DEPENDENCIES:
+  - WGLFileCache (~> 0.0.3)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - WGLFileCache
+
+SPEC CHECKSUMS:
+  WGLFileCache: dee526403b21733fd3319983117f6b802ce31d95
+
+PODFILE CHECKSUM: f50136170ae9030e7120c6af34a67c576467ff14
+
+COCOAPODS: 1.6.1

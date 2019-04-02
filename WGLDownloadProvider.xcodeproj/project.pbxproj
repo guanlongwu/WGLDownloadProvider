@@ -12,6 +12,7 @@
 		09948E38220545D00075ADDE /* WGLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 09948E33220545D00075ADDE /* WGLDownloader.m */; };
 		09948E39220545D00075ADDE /* WGLDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09948E36220545D00075ADDE /* WGLDownloadTask.m */; };
 		09E4BC042249C1E600A6E8B3 /* WGLDownloadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E4BC032249C1E600A6E8B3 /* WGLDownloadDelegate.m */; };
+		C38106A7B800A2C01AA331E4 /* libPods-WGLDownloadProvider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 183624FBB10EE2A04D548D63 /* libPods-WGLDownloadProvider.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,9 @@
 		09E4BC002249C09900A6E8B3 /* WGLDownloadUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGLDownloadUtil.h; sourceTree = "<group>"; };
 		09E4BC022249C1E600A6E8B3 /* WGLDownloadDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WGLDownloadDelegate.h; sourceTree = "<group>"; };
 		09E4BC032249C1E600A6E8B3 /* WGLDownloadDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGLDownloadDelegate.m; sourceTree = "<group>"; };
+		183624FBB10EE2A04D548D63 /* libPods-WGLDownloadProvider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WGLDownloadProvider.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B668944B670F3FD20310087 /* Pods-WGLDownloadProvider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WGLDownloadProvider.release.xcconfig"; path = "Target Support Files/Pods-WGLDownloadProvider/Pods-WGLDownloadProvider.release.xcconfig"; sourceTree = "<group>"; };
+		D123CED31E359B35083867AA /* Pods-WGLDownloadProvider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WGLDownloadProvider.debug.xcconfig"; path = "Target Support Files/Pods-WGLDownloadProvider/Pods-WGLDownloadProvider.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C38106A7B800A2C01AA331E4 /* libPods-WGLDownloadProvider.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +62,8 @@
 			children = (
 				0900355621C7806C00964EB7 /* WGLDownloadProvider */,
 				0900355521C7806C00964EB7 /* Products */,
+				9C4487DA486BAD76A1262E4E /* Pods */,
+				72341E17DF4B6F114DC58FA4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +116,24 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		72341E17DF4B6F114DC58FA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				183624FBB10EE2A04D548D63 /* libPods-WGLDownloadProvider.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C4487DA486BAD76A1262E4E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D123CED31E359B35083867AA /* Pods-WGLDownloadProvider.debug.xcconfig */,
+				6B668944B670F3FD20310087 /* Pods-WGLDownloadProvider.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,6 +141,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0900355D21C7806C00964EB7 /* Build configuration list for PBXNativeTarget "WGLDownloadProvider" */;
 			buildPhases = (
+				E0D4E6BAF8F268599EF19018 /* [CP] Check Pods Manifest.lock */,
 				0900355021C7806C00964EB7 /* Sources */,
 				0900355121C7806C00964EB7 /* Frameworks */,
 				0900355221C7806C00964EB7 /* CopyFiles */,
@@ -160,6 +186,31 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E0D4E6BAF8F268599EF19018 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WGLDownloadProvider-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0900355021C7806C00964EB7 /* Sources */ = {
@@ -282,6 +333,7 @@
 		};
 		0900355E21C7806C00964EB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D123CED31E359B35083867AA /* Pods-WGLDownloadProvider.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				OTHER_LDFLAGS = "-ObjC";
@@ -293,6 +345,7 @@
 		};
 		0900355F21C7806C00964EB7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B668944B670F3FD20310087 /* Pods-WGLDownloadProvider.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				OTHER_LDFLAGS = "-ObjC";
