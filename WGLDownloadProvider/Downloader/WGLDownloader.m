@@ -316,6 +316,10 @@ static const double kBufferSize = (1); //每下载1 MB数据则写一次磁盘
         return YES;
     }
     else {
+        if (516 == error.code) {
+            //缓存失败的原因是：File exists（目的地址已经存在该文件）
+            return YES;
+        }
         //保存失败
         return NO;
     }
